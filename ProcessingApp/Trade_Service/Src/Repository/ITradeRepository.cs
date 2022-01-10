@@ -6,6 +6,6 @@ namespace ProcessingApp.Trade_Service.Src.Repository
 {
     public interface ITradeRepository
     {
-        IObservable<int> SaveAll(List<Trade> input);
+        IObservable<int> SaveAll(IList<Trade> input);
     }
 }

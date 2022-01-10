@@ -44,7 +44,7 @@ namespace ProcessingApp.Trade_Service.Src.Repository.impl
 			return Observable.Return(_collection.EstimatedDocumentCount());
 		}
 
-		public IObservable<int> SaveAll(List<Trade> trades)
+		public IObservable<int> SaveAll(IList<Trade> trades)
 		{
 			return StoreInMongo(trades.Select(DomainMapper.MapToMongoDocument).ToList());
 		}

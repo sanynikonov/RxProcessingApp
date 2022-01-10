@@ -31,7 +31,9 @@ namespace ProcessingApp.Sockets
         {
             // TODO: input may be incorrect, pass only correct interval
             // TODO: ignore invalid values (empty, non number, <= 0, > 60)
-            return Observable.Never<long>();
+            return requestedInterval
+                .Where(v => long.TryParse(v, out var n) && n > 0 && n <= 60)
+                .Select(long.Parse);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace ProcessingApp.Trade_Service.Src.Repository.impl
                 throw new ArgumentNullException(nameof(connectionString));
             _connectionString = connectionString;
 
-            //InitDB();
+            InitDB();
             PingDB();
             ReportDbStatistics();
         }
@@ -82,7 +82,7 @@ namespace ProcessingApp.Trade_Service.Src.Repository.impl
                 .Subscribe();
         }
 
-        public IObservable<int> SaveAll(List<Trade> input)
+        public IObservable<int> SaveAll(IList<Trade> input)
         {
             return StoreTradesInDb(input)
                 .Do(e => _log.LogInformation("--- [DB] --- Inserted " + e + " trades into DB"));
@@ -111,7 +111,7 @@ namespace ProcessingApp.Trade_Service.Src.Repository.impl
             });
         }
 
-        private IObservable<int> StoreTradesInDb(List<Trade> trades)
+        private IObservable<int> StoreTradesInDb(IList<Trade> trades)
         {
             // TODO: Instead of IObservable.never()
             // TODO: Use h2Client to create handle, build UPDATE statement, use transactional support!
@@ -134,7 +134,7 @@ namespace ProcessingApp.Trade_Service.Src.Repository.impl
         // --- Helper methods --------------------------------------------------
 
         // TODO: Use this method in storeTradesInDb(...) method
-        private Dictionary<string, DynamicParameters> BuildInsertStatement(List<Trade> trades)
+        private Dictionary<string, DynamicParameters> BuildInsertStatement(IList<Trade> trades)
         {
             return trades.ToDictionary(t => t.Id, t =>
             {
